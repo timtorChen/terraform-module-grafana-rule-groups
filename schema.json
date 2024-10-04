@@ -1,0 +1,142 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Generated schema for Root",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "name": {
+        "type": "string"
+      },
+      "rules": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "annotations": {
+              "type": "object",
+              "properties": {
+                "summary": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "summary",
+                "description"
+              ]
+            },
+            "condition": {
+              "type": "string"
+            },
+            "datas": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "datasource_uid": {
+                    "type": [
+                      "integer",
+                      "string"
+                    ]
+                  },
+                  "ref_id": {
+                    "type": "string"
+                  },
+                  "model": {
+                    "type": "object",
+                    "properties": {
+                      "refId": {
+                        "type": "string"
+                      },
+                      "expr": {
+                        "type": "string"
+                      },
+                      "instant": {
+                        "type": "boolean"
+                      },
+                      "expression": {
+                        "type": "string"
+                      },
+                      "sqlExpression": {
+                        "type": "string"
+                      },
+                      "metricQueryType": {
+                        "type": "integer",
+                        "enum": [
+                          1,
+                          0
+                        ]
+                      },
+                      "metricEditorMode": {
+                        "type": "integer",
+                        "enum": [
+                          1,
+                          0
+                        ]
+                      },
+                      "type": {
+                        "type": "string"
+                      },
+                      "reducer": {
+                        "type": "string"
+                      }
+                    },
+                    "required": []
+                  }
+                },
+                "required": [
+                  "ref_id",
+                  "model"
+                ]
+              }
+            },
+            "no_data_state": {
+              "type": "string"
+            },
+            "exec_err_state": {
+              "type": "string"
+            },
+            "for": {
+              "type": "string"
+            },
+            "labels": {
+              "type": "object",
+              "properties": {
+                "severity": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "severity"
+              ]
+            }
+          },
+          "required": [
+            "name",
+            "annotations",
+            "condition",
+            "datas",
+            "no_data_state",
+            "exec_err_state",
+            "for",
+            "labels"
+          ]
+        }
+      },
+      "interval_seconds": {
+        "type": "integer"
+      }
+    },
+    "required": [
+      "name",
+      "rules",
+      "interval_seconds"
+    ]
+  }
+}

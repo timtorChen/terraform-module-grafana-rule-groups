@@ -1,0 +1,22 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/timtorChen/terraform-module-grafana-rule-groups/refs/heads/main/schema.json
+- name: metrics-check
+  interval_seconds: 300
+  rules:
+    - name: node-no-data
+      annotations:
+        summary: "Node-exporter metrics return NoData"
+        description: >-
+          Node-exporter metrics has been no data for 5 minutes.
+          Please check if node-exporter or Prometheus is working.
+      condition: "Z"
+      datas:
+        - ref_id: "Z"
+          model:
+            expr: "absent(node_uname_info) or vector(0)"
+            instant: true
+      no_data_state: "Alerting"
+      exec_err_state: "Error"
+      for: "5m"
+      labels:
+        severity: "critical"

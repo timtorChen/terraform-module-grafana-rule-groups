@@ -39,6 +39,26 @@ resource "grafana_rule_group" "this" {
           )
         )
       )
+      dynamic "notification_settings" {
+        for_each = (
+          try([var.rule_groups.rule_group["${each.key}"].rule["${rule.key}"].notification_settings],
+            try([var.rule_groups.rule_group["${each.key}"].notification_settings],
+              try([var.rule_groups.notification_settings],
+                try([rule.value.notification_settings], [])
+              )
+            )
+          )
+        )
+        iterator = notification_settings
+        content {
+          contact_point   = notification_settings.value.contact_point
+          group_by        = try(notification_settings.value.group_by, null)
+          group_interval  = try(notification_settings.value.group_interval, null)
+          group_wait      = try(notification_settings.value.group_wait, null)
+          mute_timings    = try(notification_settings.value.mute_timings, null)
+          repeat_interval = try(notification_settings.value.repeat_interval, null)
+        }
+      }
 
       dynamic "data" {
         for_each = rule.value.datas

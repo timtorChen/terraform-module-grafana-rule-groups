@@ -115,6 +115,38 @@
               "required": [
                 "severity"
               ]
+            },
+            "notification_settings": {
+              "type": "object",
+              "properties": {
+                "contact_point": {
+                  "type": "string"
+                },
+                "group_by": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "group_interval": {
+                  "type": "string"
+                },
+                "group_wait": {
+                  "type": "string"
+                },
+                "mute_timings": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "repeat_interval": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "contact_point"
+              ]
             }
           },
           "required": [

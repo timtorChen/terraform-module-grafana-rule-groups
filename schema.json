@@ -147,6 +147,9 @@
               "required": [
                 "contact_point"
               ]
+            },
+            "pause": {
+              "type": "boolean"
             }
           },
           "required": [

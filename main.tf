@@ -33,9 +33,11 @@ resource "grafana_rule_group" "this" {
         try(var.rule_groups.rule_group["${each.key}"].rule["${rule.key}"].labels, null)
       )
       is_paused = (
-        try(var.rule_groups.rule_group["${each.key}"].rule["${rule.key}"].pause,
-          try(var.rule_groups.rule_group["${each.key}"].pause,
-            try(var.rule_groups.pause, false)
+        try(rule.value.pause,
+          try(var.rule_groups.rule_group["${each.key}"].rule["${rule.key}"].pause,
+            try(var.rule_groups.rule_group["${each.key}"].pause,
+              try(var.rule_groups.pause, false)
+            )
           )
         )
       )

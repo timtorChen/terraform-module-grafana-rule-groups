@@ -1,73 +1,95 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "Grafana alerting rule groups",
   "description": "Grafana alerting rule groups for terraform",
   "type": "array",
   "items": {
     "type": "object",
     "properties": {
       "name": {
+        "description": "The name of the rule group.",
         "type": "string"
       },
+      "interval_seconds": {
+        "description": "The interval, in seconds, at which all rules in the group are evaluated. If a group contains many rules, the rules are evaluated sequentially.",
+        "type": "integer"
+      },
       "rules": {
+        "description": " The rules within the group.",
         "type": "array",
         "items": {
           "type": "object",
           "properties": {
             "name": {
+              "description": "The name of the alert rule.",
               "type": "string"
             },
             "annotations": {
+              "description": "Key-value pairs of metadata to attach to the alert rule that may add user-defined context, but cannot be used for matching, grouping, or routing.",
               "type": "object",
               "properties": {
                 "summary": {
+                  "description": "The brief summry for the alert rule.",
                   "type": "string"
                 },
                 "description": {
+                  "description": "The detailed explaination of the alert rule.",
+                  "type": "string"
+                }
+              }
+            },
+            "labels": {
+              "description": "Key-value pairs to attach to the alert rule that can be used in matching, grouping, and routing.",
+              "type": "object",
+              "properties": {
+                "severity": {
+                  "description": "The criticality level of the alert (e.g., \"critical\", \"warning\", or \"info\").",
                   "type": "string"
                 }
               }
             },
             "condition": {
+              "description": "The ref_id of the query node in the data field to use as the alert condition.",
               "type": "string"
             },
             "datas": {
+              "description": "A sequence of stages that describe the contents of the rule.",
               "type": "array",
               "items": {
                 "type": "object",
                 "properties": {
                   "datasource_uid": {
+                    "description": "The UID of the datasource being queried, or \"-100\" if this stage is an expression stage.",
                     "type": [
                       "integer",
                       "string"
                     ]
                   },
                   "ref_id": {
+                    "description": "A unique string to identify this query stage within a rule.",
                     "type": "string"
                   },
                   "model": {
+                    "description": "Custom data to send to the specified datasource when querying.",
                     "type": "object",
                     "properties": {
-                      "refId": {
-                        "type": "string"
-                      },
                       "expr": {
+                        "description": "The expression for the query, such as PromQL or LogQL, depending on the datasource.",
                         "type": "string"
                       },
                       "instant": {
+                        "description": "Whether the query should return an instant result (true) or a range of results over time (false).",
                         "type": "boolean",
                         "enum": [
                           true,
                           false
                         ]
                       },
-                      "expression": {
-                        "type": "string"
-                      },
                       "sqlExpression": {
+                        "description": "TODO",
                         "type": "string"
                       },
                       "metricQueryType": {
+                        "description": "TODO",
                         "type": "integer",
                         "enum": [
                           1,
@@ -75,6 +97,7 @@
                         ]
                       },
                       "metricEditorMode": {
+                        "description": "TODO",
                         "type": "integer",
                         "enum": [
                           1,
@@ -82,10 +105,31 @@
                         ]
                       },
                       "type": {
+                        "description": "The type of expression query.",
+                        "type": "string",
+                        "enum": [
+                          "math",
+                          "reduce",
+                          "resample",
+                          "classic_conditions",
+                          "threshold"
+                        ]
+                      },
+                      "expression": {
+                        "description": "The input of the expression, or the statement of the math typed expression.",
                         "type": "string"
                       },
                       "reducer": {
-                        "type": "string"
+                        "description": "The reducer function name.",
+                        "type": "string",
+                        "enum": [
+                          "min",
+                          "max",
+                          "mean",
+                          "sum",
+                          "count",
+                          "last"
+                        ]
                       }
                     }
                   }
@@ -97,47 +141,49 @@
               }
             },
             "no_data_state": {
+              "description": "Describes what state to enter when the rule's query returns No Data. Options are OK, NoData, KeepLast, and Alerting. Defaults to \"NoData\".",
               "type": "string"
             },
             "exec_err_state": {
+              "description": "Describes what state to enter when the rule's query is invalid and the rule cannot be executed. Options are OK, Error, KeepLast, and Alerting. Defaults to \"Alerting\".",
               "type": "string"
             },
             "for": {
+              "description": "The amount of time for which the rule must be breached for the rule to be considered to be Firing. Before this time has elapsed, the rule is only considered to be Pending. Defaults to 0.",
               "type": "string"
             },
-            "labels": {
-              "type": "object",
-              "properties": {
-                "severity": {
-                  "type": "string"
-                }
-              }
-            },
             "notification_settings": {
+              "description": "Notification settings for the rule. If specified, it overrides the notification policies. Available since Grafana 10.4, requires feature flag 'alertingSimplifiedRouting' enabled.",
               "type": "object",
               "properties": {
                 "contact_point": {
+                  "description": "The contact point to route notifications that match this rule to.",
                   "type": "string"
                 },
                 "group_by": {
+                  "description": "A list of alert labels to group alerts into notifications by. Use the special label ... to group alerts by all labels, effectively disabling grouping. If empty, no grouping is used. If specified, requires labels 'alertname' and 'grafana_folder' to be included",
                   "type": "array",
                   "items": {
                     "type": "string"
                   }
                 },
                 "group_interval": {
+                  "description": "Minimum time interval between two notifications for the same group. Default is 5 minutes.",
                   "type": "string"
                 },
                 "group_wait": {
+                  "description": "Time to wait to buffer alerts of the same group before sending a notification. Default is 30 seconds.",
                   "type": "string"
                 },
                 "mute_timings": {
+                  "description": "A list of mute timing names to apply to alerts that match this policy.",
                   "type": "array",
                   "items": {
                     "type": "string"
                   }
                 },
                 "repeat_interval": {
+                  "description": "Minimum time interval for re-sending a notification if an alert is still firing. Default is 4 hours.",
                   "type": "string"
                 }
               },
@@ -146,6 +192,7 @@
               ]
             },
             "pause": {
+              "description": "Sets whether the alert should be paused or not.",
               "type": "boolean",
               "enum": [
                 true,
@@ -160,15 +207,12 @@
           ],
           "additionalProperties": false
         }
-      },
-      "interval_seconds": {
-        "type": "integer"
       }
     },
     "required": [
       "name",
-      "rules",
-      "interval_seconds"
+      "interval_seconds",
+      "rules"
     ],
     "additionalProperties": false
   }

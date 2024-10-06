@@ -15,18 +15,18 @@ resource "grafana_rule_group" "this" {
     content {
       name           = rule.value.name
       condition      = rule.value.condition
-      no_data_state  = rule.value.no_data_state
-      exec_err_state = rule.value.exec_err_state
-      for            = rule.value.for
+      no_data_state  = try(rule.value.no_data_state, null)
+      exec_err_state = try(rule.value.exec_err_state, null)
+      for            = try(rule.value.for, null)
       annotations = merge(
-        rule.value.annotations,
+        try(rule.value.annotations, null),
         try(var.annotations, null),
         try(var.rule_groups.annotations, null),
         try(var.rule_groups.rule_group["${each.key}"].annotations, null),
         try(var.rule_groups.rule_group["${each.key}"].rule["${rule.key}"].annotations, null)
       )
       labels = merge(
-        rule.value.labels,
+        try(rule.value.labels, null),
         try(var.labels, null),
         try(var.rule_groups.labels, null),
         try(var.rule_groups.rule_group["${each.key}"].labels, null),

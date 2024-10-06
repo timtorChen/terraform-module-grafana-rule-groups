@@ -26,11 +26,7 @@
                 "description": {
                   "type": "string"
                 }
-              },
-              "required": [
-                "summary",
-                "description"
-              ]
+              }
             },
             "condition": {
               "type": "string"
@@ -59,7 +55,11 @@
                         "type": "string"
                       },
                       "instant": {
-                        "type": "boolean"
+                        "type": "boolean",
+                        "enum": [
+                          true,
+                          false
+                        ]
                       },
                       "expression": {
                         "type": "string"
@@ -87,8 +87,7 @@
                       "reducer": {
                         "type": "string"
                       }
-                    },
-                    "required": []
+                    }
                   }
                 },
                 "required": [
@@ -112,10 +111,7 @@
                 "severity": {
                   "type": "string"
                 }
-              },
-              "required": [
-                "severity"
-              ]
+              }
             },
             "notification_settings": {
               "type": "object",
@@ -150,19 +146,19 @@
               ]
             },
             "pause": {
-              "type": "boolean"
+              "type": "boolean",
+              "enum": [
+                true,
+                false
+              ]
             }
           },
           "required": [
             "name",
-            "annotations",
             "condition",
-            "datas",
-            "no_data_state",
-            "exec_err_state",
-            "for",
-            "labels"
-          ]
+            "datas"
+          ],
+          "additionalProperties": false
         }
       },
       "interval_seconds": {
@@ -173,6 +169,7 @@
       "name",
       "rules",
       "interval_seconds"
-    ]
+    ],
+    "additionalProperties": false
   }
 }

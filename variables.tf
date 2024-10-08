@@ -17,12 +17,35 @@ variable "datasource_uid" {
   default = ""
 }
 
+variable "pause" {
+  type    = bool
+  default = null
+}
+
+variable "editable" {
+  type    = bool
+  default = null
+}
+
+variable "notification_settings" {
+  type = object({
+    contact_point   = string
+    group_by        = optional(list(string))
+    group_interval  = optional(string)
+    group_wait      = optional(string)
+    mute_timings    = optional(list(string))
+    repeat_interval = optional(string)
+  })
+  default = null
+}
+
 variable "static_rule_groups" {
   type = any
 }
 
 variable "rule_groups" {
-  type = any
+  type    = any
+  default = {}
 }
 
 locals {

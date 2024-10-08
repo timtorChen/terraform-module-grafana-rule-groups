@@ -13,6 +13,14 @@
         "description": "The interval, in seconds, at which all rules in the group are evaluated. If a group contains many rules, the rules are evaluated sequentially.",
         "type": "integer"
       },
+      "editable": {
+        "description": "Allow modifying the rule group from other sources than Terraform or the Grafana API.",
+        "type": "boolean",
+        "enum": [
+          true,
+          false
+        ]
+      },
       "rules": {
         "description": " The rules within the group.",
         "type": "array",
